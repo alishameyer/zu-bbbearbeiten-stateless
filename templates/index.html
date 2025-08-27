@@ -1,53 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
     <title>Zu Bbbearbeiten</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-</head>
+  </head>
+  <body>
+    <div class="ui container" style="margin-top:50px;">
+      <h1 class="ui center aligned header">👏👏👏 Zu Bbbearbeiten</h1>
+      <div class="ui divider"></div>
 
-<body>
-    <div style="margin-top: 50px;" class="ui container">
-        <h1 class="ui center aligned header">👏👏👏 Zu Bbbearbeiten</h1>
-        <div class="ui divider" />
-        <form name="item" class="ui form" action="/add" method="post">
-            <div class="field" style="margin-top: 10px;">
-                <div for="text" class="ui pointing below label">Was gibbbt es zu tun?</div>
-                <div class="ui action input">
-                    <input autofocus name="text" type="text" name="text" placeholder="Fürs Modul lernen...">
-                    <button class="ui blue button" type="submit">Hinzufügen</button>
-                </div>
-            </div>
-
-        </form>
-
-        {% for item in items %}
-        <div class="ui segment" style="overflow:hidden; position: relative">
-            <span class="ui header" style="margin-left: 0.5em;">{{item.text}}</span>
-            {% if item.isCompleted %}
-            <a class="ui green left corner label" href="/update/{{loop.index0}}"><i
-                    class="check square outline icon"></i></a>
-            {% else %}
-            <a class="ui red left corner label" href="/update/{{loop.index0}}"><i
-                    class="square outline icon icon"></i></a>
-            {% endif %}
+      <form class="ui form" action="/add" method="post" name="todoForm">
+        <div class="field" style="margin-top:10px;">
+          <div class="ui pointing below label">Was gibbbt es zu tun?</div>
+          <div class="ui action input">
+            <input autofocus type="text" name="title" placeholder="Fürs Modul lernen..." />
+            <button class="ui blue button" type="submit">Hinzufügen</button>
+          </div>
         </div>
-        {% endfor %}
+      </form>
+
+      {% for todo in todos %}
+        <div class="ui segment" style="overflow:hidden; position:relative;">
+          <span class="ui header" style="margin-left:.5em;">{{ todo.title }}</span>
+          {% if todo.isCompleted %}
+            <a class="ui green left corner label" href="/update/{{ loop.index0 }}"><i class="check square outline icon"></i></a>
+          {% else %}
+            <a class="ui red left corner label" href="/update/{{ loop.index0 }}"><i class="square outline icon"></i></a>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="ui message">Noch keine Todos.</div>
+      {% endfor %}
+
+      <p><small>Per GET hinzufügen: <code>/create/&lt;Titel&gt;</code></small></p>
     </div>
 
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            document.item.text.focus();
-
-        });
-
+    <script>
+      document.forms.todoForm.title.focus();
     </script>
-
-
+  </body>
 </html>
